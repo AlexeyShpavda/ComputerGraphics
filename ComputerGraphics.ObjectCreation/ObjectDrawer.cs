@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace ComputerGraphics.ObjectCreation
 {
-    public class DrawingObject
+    public class ObjectDrawer
     {
         public void DrawLine(Graphics g, Color color, int x1, int y1,
             int x2, int y2)

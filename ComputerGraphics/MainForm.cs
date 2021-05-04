@@ -25,7 +25,7 @@ namespace ComputerGraphics
 
         public ImageHandler ImageHandler { get; private set; }
 
-        public DrawingObject DrawingObject{ get; private set; }
+        public ObjectDrawer ObjectDrawer{ get; private set; }
 
         private void OpenButton_Click(object sender, EventArgs e)
         {
@@ -145,7 +145,7 @@ namespace ComputerGraphics
 
         private void LineButton_Click(object sender, EventArgs e)
         {
-            DrawingObject = new DrawingObject();
+            ObjectDrawer = new ObjectDrawer();
 
             var random = new Random();
             _x1 = random.Next(pictureBox.Width);
@@ -153,12 +153,12 @@ namespace ComputerGraphics
             _y1 = random.Next(pictureBox.Height);
             _y2 = random.Next(pictureBox.Height);
 
-            DrawingObject.DrawLine(pictureBox.CreateGraphics(), Color.Black, _x1, _y1, _x2, _y2);
+            ObjectDrawer.DrawLine(pictureBox.CreateGraphics(), Color.Black, _x1, _y1, _x2, _y2);
         }
 
         private void LineRotationButton_Click(object sender, EventArgs e)
         {
-            DrawingObject = new DrawingObject();
+            ObjectDrawer = new ObjectDrawer();
 
             Graphics = Graphics.FromHwnd(pictureBox.Handle);
 
@@ -168,10 +168,10 @@ namespace ComputerGraphics
             _x4 = pictureBox.Width / 2;
             _y4 = (pictureBox.Height / 2) + 100;
 
-            //DrawingObject.DrawLine(Graphics, Color.Black, _x4, _y4, _x2, _y2);
+            //ObjectDrawer.DrawLine(Graphics, Color.Black, _x4, _y4, _x2, _y2);
 
-            DrawingObject.DrawLine(Graphics, Color.Black, _x2, _y2, _x3, _y3);
-            DrawingObject.DrawLine(Graphics, Color.Black, pictureBox.Width / 2, pictureBox.Height / 2, _x2, _y2);
+            ObjectDrawer.DrawLine(Graphics, Color.Black, _x2, _y2, _x3, _y3);
+            ObjectDrawer.DrawLine(Graphics, Color.Black, pictureBox.Width / 2, pictureBox.Height / 2, _x2, _y2);
             _x3 = _x2;
             _y3 = _y2 - 50;
 
@@ -182,12 +182,12 @@ namespace ComputerGraphics
 
         private void TimerForRotation_Tick(object sender, EventArgs e)
         {
-            DrawingObject = new DrawingObject();
+            ObjectDrawer = new ObjectDrawer();
 
             Graphics.FillRectangle(new SolidBrush(Color.Gray), 0, 0, pictureBox.Width, pictureBox.Height);
 
-            var firstPointCoordinates = DrawingObject.Rotation(_x4, _y4, pictureBox.Width / 2, pictureBox.Height / 2, 15);
-            var secondPointCoordinates = DrawingObject.Rotation(_x2, _y2, pictureBox.Width / 2, pictureBox.Height / 2, 15);
+            var firstPointCoordinates = ObjectDrawer.Rotation(_x4, _y4, pictureBox.Width / 2, pictureBox.Height / 2, 15);
+            var secondPointCoordinates = ObjectDrawer.Rotation(_x2, _y2, pictureBox.Width / 2, pictureBox.Height / 2, 15);
 
             _x4 = firstPointCoordinates.Item1;
             _y4 = firstPointCoordinates.Item2;
@@ -195,22 +195,22 @@ namespace ComputerGraphics
             _x2 = secondPointCoordinates.Item1;
             _y2 = secondPointCoordinates.Item2;
 
-            DrawingObject.DrawLine(Graphics, Color.Black, _x4, _y4, _x2, _y2);
+            ObjectDrawer.DrawLine(Graphics, Color.Black, _x4, _y4, _x2, _y2);
 
             SmallLineRotation();
-            DrawingObject.DrawLine(Graphics, Color.Black, pictureBox.Width / 2, pictureBox.Height / 2, _x2, _y2);
+            ObjectDrawer.DrawLine(Graphics, Color.Black, pictureBox.Width / 2, pictureBox.Height / 2, _x2, _y2);
         }
 
         private void SmallLineRotation()
         {
-            DrawingObject = new DrawingObject();
+            ObjectDrawer = new ObjectDrawer();
 
-            var smallLinePointCoordinates = DrawingObject.Rotation(_x3, _y3, _x2, _y2, 10);
+            var smallLinePointCoordinates = ObjectDrawer.Rotation(_x3, _y3, _x2, _y2, 10);
 
             _x3 = smallLinePointCoordinates.Item1;
             _y3 = smallLinePointCoordinates.Item2;
 
-            DrawingObject.DrawLine(Graphics, Color.Black, _x2, _y2, _x3, _y3);
+            ObjectDrawer.DrawLine(Graphics, Color.Black, _x2, _y2, _x3, _y3);
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -221,11 +221,11 @@ namespace ComputerGraphics
 
         private void polygonButton_Click(object sender, EventArgs e)
         {
-            DrawingObject = new DrawingObject();
+            ObjectDrawer = new ObjectDrawer();
 
             var g = Graphics.FromImage(Bitmap);
 
-            DrawingObject.DrawPolygon(g, pictureBox.Width, pictureBox.Height);
+            ObjectDrawer.DrawPolygon(g, pictureBox.Width, pictureBox.Height);
 
             pictureBox.Image = Bitmap;
         }
@@ -234,8 +234,8 @@ namespace ComputerGraphics
         {
             var location = e.Location;
 
-            DrawingObject = new DrawingObject();
-            DrawingObject.FloodFill(Bitmap, location, Color.Black);
+            ObjectDrawer = new ObjectDrawer();
+            ObjectDrawer.FloodFill(Bitmap, location, Color.Black);
 
             pictureBox.Refresh();
         }
