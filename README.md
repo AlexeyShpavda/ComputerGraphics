@@ -1,2 +1,2 @@
-# ImageProcessor
-Work with Images and Graphics
+# Computer graphics
+Working with Images and Graphics
